@@ -21,5 +21,11 @@ $router->post('/login', 'AuthController@login');
 
 $router->group(['middleware' => 'auth.admin'], function () use ($router) {
     $router->post('/logout', 'AuthController@logout');
-    // members and attendance routes go here next
+    
+    //members endpoints
+    $router->post('/members', 'MemberController@store');
+    $router->get('/members', 'MemberController@index');
+    $router->get('/members/{id}', 'MemberController@show');
+    $router->put('/members/{id}', 'MemberController@update');
+    $router->delete('/members/{id}', 'MemberController@destroy');
 });
