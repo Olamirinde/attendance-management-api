@@ -11,18 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attendance', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('employee_id');
+        Schema::create('attendance', function ($table) {
+            $table->increments('id');
+            $table->unsignedInteger('member_id');
             $table->date('date');
-            $table->enum('status', ['present','absent','late','leave','holiday']);
+            $table->enum('status', ['present', 'absent', 'late', 'excused']);
             $table->time('check_in')->nullable();
             $table->time('check_out')->nullable();
-            $table->text('notes')->nullable();
+            $table->string('note')->nullable();
+            $table->unsignedInteger('marked_by');
             $table->timestamps();
-            $table->unique(['employee_id', 'date']);
-            $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
-        });
+
+            $table->unique(['member_id', 'date']);
+            $table->foreign('member_id')->references('id')->on('members')->onDelete('cascade');
+            $table->foreign('marked_by')->references('id')->on('admins');
+});
     }
 
     /**

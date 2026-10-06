@@ -16,3 +16,10 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->post('/login', 'AuthController@login');
+
+$router->group(['middleware' => 'auth.admin'], function () use ($router) {
+    $router->post('/logout', 'AuthController@logout');
+    // members and attendance routes go here next
+});

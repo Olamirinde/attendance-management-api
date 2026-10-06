@@ -80,6 +80,9 @@ $app->configure('app');
 //     'auth' => App\Http\Middleware\Authenticate::class,
 // ]);
 
+$app->routeMiddleware([
+    'auth.admin' => App\Http\Middleware\AdminAuth::class,
+]);
 /*
 |--------------------------------------------------------------------------
 | Register Service Providers
